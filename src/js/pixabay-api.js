@@ -1,6 +1,6 @@
 export * from "./pixabay-api.js";
 
-export const fetchPhotosByQuery = query => {
+export const fetchPhotosByQuery = (query,page=1) => {
   const API_KEY = "3024031-50bf2ca6b1e9bc3513f045fb3";
   const searchParams = new URLSearchParams({
     key: API_KEY,
