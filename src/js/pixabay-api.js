@@ -25,19 +25,4 @@ export async function getImages(query, page) {
   return axios.get(baseUrl);
 }
 
-export async function loadMore(query, page) {
-  let currentPage = 1;
-  let qtyPerPage = 15;
-  const searchParams = new URLSearchParams({
-    key: API_KEY,
-    q: query,
-    image_type: "photo",
-    orientation: "horizontal",
-    safesearch: "true",
-    per_page: qtyPerPage,
-    page: currentPage
-  });
 
-  const baseUrl = `https://pixabay.com/api/?${searchParams.toString()}`;
-  return axios.get(baseUrl);
-}

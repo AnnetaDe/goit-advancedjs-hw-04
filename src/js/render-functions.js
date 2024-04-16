@@ -9,7 +9,6 @@ import iziToast from "izitoast";
 
 // function imports
 import { getImages } from "./pixabay-api.js";
-import { loadMore } from "./pixabay-api.js";
 import simpleLightbox from "simplelightbox";
 
 // local variables
@@ -22,14 +21,12 @@ loadMoreImagesBtn.classList.add("is-hidden");
 let query = "";
 let currentPage = 1;
 
-const scroll=()=>{
-  const scroll= document.querySelector('.bottom-scroll')
+const scroll = () => {
+  const scroll = document.querySelector(".bottom-scroll");
   scroll.scrollIntoView({
-    
-    behavior: 'smooth',
+    behavior: "smooth"
   });
-}
-  
+};
 
 const lightbox = new SimpleLightbox(".image-link", {
   focus: true,
@@ -101,11 +98,8 @@ const onSearchFormSubmit = async event => {
         "No images found. Please enter another query."
       );
       return;
-      
     }
-   
-    
-    
+
     if (response.data.totalHits <= 15) {
       console.log(response.data.totalHits);
       galleryEl.insertAdjacentHTML(
@@ -119,11 +113,6 @@ const onSearchFormSubmit = async event => {
       galleryEl.innerHTML = renderItemsMarkup(response.data.hits);
       showLoadMoreBtn();
       loadMoreImagesBtn.addEventListener("click", onLoadMoreBtnClick);
-      
-      
-      
-
-
     }
     const lightbox = new SimpleLightbox(".image-link", {
       focus: true,
@@ -146,8 +135,6 @@ const onLoadMoreBtnClick = async event => {
     );
     lightbox.refresh();
     scroll();
-    
-   
 
     let totalPages = Math.ceil(response.data.totalHits / 15);
 
