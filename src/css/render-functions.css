@@ -167,6 +167,7 @@ letter-spacing: 0.48px;
 
 .load-more-images-btn{
 display: block;  
+margin: 0 auto;
     width: 91px;
     height: 40px;
     background: #4E75FF;
@@ -180,5 +181,5 @@ display: block;
     font-family: Montserrat, sans-serif;
     cursor: pointer;
     letter-spacing: 0.64px;
-    margin-top: 36px;
+    margin-top: 32px;
 }
