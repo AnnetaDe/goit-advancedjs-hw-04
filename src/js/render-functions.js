@@ -151,12 +151,17 @@ const onLoadMoreBtnClick = async event => {
       "beforeend",
       renderItemsMarkup(response.data.hits)
     );
-    lightbox.refresh();
+    new SimpleLightbox(".image-link", {
+      focus: true,
+      captionsData: "alt",
+      captionDelay: 250
+    });
+   
     scroll();
 
     let totalPages = Math.ceil(response.data.totalHits / 15);
 
-    if (currentPage === totalPages) {
+    if (currentPage === totalPages ) {
       removeLoadMoreBtn();
       iziToast.warning({
         message: "We're sorry, but you've reached the end of search results.",
