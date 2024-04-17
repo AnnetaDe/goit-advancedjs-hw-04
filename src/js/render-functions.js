@@ -2,6 +2,7 @@ export * from "./render-functions.js";
 
 // library imports
 // import axios from "axios"; // Remove unused import
+import { autocomplete } from '@algolia/autocomplete-js';
 
 import SimpleLightbox from "simplelightbox";
 import "simplelightbox/dist/simple-lightbox.min.css";
@@ -185,3 +186,8 @@ const onLoadMoreBtnClick = async event => {
 searchForm.addEventListener("submit", onSearchFormSubmit);
 
 
+
+autocomplete({
+  container: '#autocomplete',
+  placeholder: 'Search for images',
+});

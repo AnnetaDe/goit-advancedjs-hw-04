@@ -15,6 +15,9 @@
   "author": "Alexander Repeta <alexander.repeta@gmail.com>",
   "license": "ISC",
   "dependencies": {
+    "@algolia/autocomplete-js": "^1.17.0",
+    "algoliasearch": "^4.23.3",
+    "autocomplete.js": "^0.38.1",
     "axios": "^1.6.8",
     "flatpickr": "^4.6.13",
     "izitoast": "^1.4.0",
