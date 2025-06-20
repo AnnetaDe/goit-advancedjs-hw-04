@@ -72,7 +72,7 @@ body{
   padding: 36px 156px;
 }
 
-.picture-and-data-list {
+.gallery {
   width: 100%;
   display: flex;
   flex-wrap: wrap;
@@ -80,7 +80,7 @@ body{
   
 
 }
-.picture-and-data-item {
+.gallery-item {
 
 
   overflow: hidden;
@@ -125,7 +125,7 @@ letter-spacing: 0.48px;
 }
     
 
-.search-form {
+.form {
     width: 371px;
     display: block;
    margin: 0 auto;
@@ -133,7 +133,7 @@ letter-spacing: 0.48px;
     margin-bottom: 36px;
     margin-top: 36px;
 }
-.search-form input{
+.form input{
     padding: 8px 16px;
     width: 272px;
     height: 40px;
@@ -146,7 +146,7 @@ letter-spacing: 0.48px;
     color: #808080;
     
 }
-.search-form-button {
+.form button {
     width: 91px;
     height: 40px;
     background: #4E75FF;
