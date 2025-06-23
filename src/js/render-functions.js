@@ -17,8 +17,7 @@ const loadMoreImagesBtn = document.querySelector(".load-more-images-btn");
 const userInput = document.querySelector("#user-search-input");
 loadMoreImagesBtn.classList.add("is-hidden");
 let query = "";
-let totalHits = 0;
-let totalPages = 0;
+
 let currentPage = 1;
 
 const scroll = () => {
