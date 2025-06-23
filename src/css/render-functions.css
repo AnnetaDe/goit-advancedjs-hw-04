@@ -65,26 +65,35 @@ body{
     font-family: Montserrat;
     font-style: normal;
 }
-
-.container {
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  width: 1440px;
-  padding: 36px 156px;
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
 }
 
+.container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background-color: #f0f0f0;
+}
+
+
 .gallery {
-  width: 100%;
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
   justify-content: center;
+  gap: 8px;
+  margin: 0 auto;
+  max-width: 1200px;
+
 }
 .gallery-item {
   cursor: pointer;
   overflow: hidden;
-  width: 360px;
+  max-width: 360px;
   height: 200px;
   background: lightgray -76px -16.297px / 125.278% 150.297% no-repeat;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);

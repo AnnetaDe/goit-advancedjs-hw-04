@@ -17,6 +17,8 @@ const loadMoreImagesBtn = document.querySelector(".load-more-images-btn");
 const userInput = document.querySelector("#user-search-input");
 loadMoreImagesBtn.classList.add("is-hidden");
 let query = "";
+let totalHits = 0;
+let totalPages = 0;
 let currentPage = 1;
 
 const scroll = () => {
@@ -85,12 +87,16 @@ const onLoadMoreBtnClick = async event => {
   try {
     currentPage += 1;
     const response = await getImages(query, currentPage);
+
     galleryEl.insertAdjacentHTML(
       "beforeend",
       renderItemsMarkup(response.data.hits)
     );
-    let lightbox = getLightbox(".image-link");
-    lightbox.refresh();
+    new SimpleLightbox(".image-link", {
+      focus: true,
+      captionsData: "alt",
+      captionDelay: 250
+    });
    
     scroll();
 
@@ -116,6 +122,7 @@ const onLoadMoreBtnClick = async event => {
     console.log(error);
   }
 };
+
 
 
 const onSearchFormSubmit = async event => {
@@ -146,13 +153,17 @@ const onSearchFormSubmit = async event => {
         "beforeend",
         renderItemsMarkup(response.data.hits)
       );
-      let lightbox=getLightbox(".image-link");
+      let lightbox = getLightbox(".image-link");
       lightbox.refresh();
 
     if (response.data.totalHits <= 15) {
       removeLoadMoreBtn();
-      return;
+      iziToast.info({
+        message: "No more images to load.",
+        position: "topRight"
+      });
     }
+
 
     if (response.data.totalHits > 15) {
       galleryEl.innerHTML = renderItemsMarkup(response.data.hits);
