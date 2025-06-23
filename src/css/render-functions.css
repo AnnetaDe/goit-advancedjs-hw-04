@@ -67,7 +67,9 @@ body{
 }
 
 .container {
-  display: block;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
   width: 1440px;
   padding: 36px 156px;
 }
@@ -77,17 +79,18 @@ body{
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
-  
-
+  justify-content: center;
 }
 .gallery-item {
-
-
+  cursor: pointer;
   overflow: hidden;
   width: 360px;
   height: 200px;
-  border: 1px solid #808080;
   background: lightgray -76px -16.297px / 125.278% 150.297% no-repeat;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+.gallery-item:hover {
+  transform: scale(1.02);
 }
 .img-container{
     height: 152px;
@@ -126,14 +129,15 @@ letter-spacing: 0.48px;
     
 
 .form {
+    display: flex;
+    align-items: center;
     width: 371px;
-    display: block;
    margin: 0 auto;
     gap: 24px;
     margin-bottom: 36px;
     margin-top: 36px;
 }
-.form input{
+.form-input{
     padding: 8px 16px;
     width: 272px;
     height: 40px;
@@ -146,7 +150,7 @@ letter-spacing: 0.48px;
     color: #808080;
     
 }
-.form button {
+.form-button {
     width: 91px;
     height: 40px;
     background: #4E75FF;

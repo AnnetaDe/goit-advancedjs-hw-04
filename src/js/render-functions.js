@@ -2,20 +2,16 @@ export * from "./render-functions.js";
 
 // library imports
 // import axios from "axios"; // Remove unused import
-import { autocomplete } from '@algolia/autocomplete-js';
-
 import SimpleLightbox from "simplelightbox";
 import "simplelightbox/dist/simple-lightbox.min.css";
 import iziToast from "izitoast";
 
 // function imports
 import { getImages } from "./pixabay-api.js";
-import simpleLightbox from "simplelightbox";
 
 // local variables
-const searchForm = document.querySelector(".search-form");
-const galleryEl = document.querySelector(".picture-and-data-list");
-const pictureCard = document.querySelector(".picture-and-data-item");
+const searchForm = document.querySelector(".form");
+const galleryEl = document.querySelector(".gallery");
 const loaderEl = document.querySelector(".loader");
 const loadMoreImagesBtn = document.querySelector(".load-more-images-btn");
 const userInput = document.querySelector("#user-search-input");
@@ -37,7 +33,7 @@ const scrollUp = () => {
   });
 };
 
-const lightbox = new SimpleLightbox(".image-link", {
+const getLightbox = (linkClass) => new SimpleLightbox(linkClass, {
   focus: true,
   captionsData: "alt",
   captionDelay: 250
@@ -47,7 +43,7 @@ function renderItemsMarkup(hits) {
   const galleryItemsMarkup = hits
     .map(hit => {
       return `
-    <li class="picture-and-data-item">
+    <li class="gallery-item">
     <div class="img-container">
           <a  class="image-link" href="${hit.largeImageURL}"><img class="image" src="${hit.webformatURL}" alt="${hit.tags}" />
           </div>
@@ -75,74 +71,15 @@ const showLoadMoreBtn = () => {
 };
 const refreshGallery = (searchForm, errorMessage) => {
   galleryEl.innerHTML = "";
-
   searchForm.reset();
-
   iziToast.error({
     message: errorMessage,
     position: "topRight",
     timeout: 2000
   });
-
   removeLoadMoreBtn();
 };
 
-const onSearchFormSubmit = async event => {
-  try {
-    event.preventDefault();
-    query = event.target.elements.picture_search.value.trim();
-    currentPage = 1;
-    
-    const lightbox = new SimpleLightbox(".image-link", {
-      focus: true,
-      captionsData: "alt",
-      captionDelay: 250
-    });
-    if (query === "") {
-      refreshGallery(event.target, "Please enter a query.");
-      return;
-    }
-    galleryEl.innerHTML = "";
-    loaderEl.classList.add("is-visible");
-    const response = await getImages(query, currentPage);
-    loaderEl.classList.remove("is-visible");
-    userInput.value = "";
-
-    if (response.data.hits.length === 0) {
-      refreshGallery(
-        event.target,
-        "No images found. Please enter another query."
-      );
-      
-      return;
-    }
-
-    if (response.data.totalHits <= 15) {
-      galleryEl.insertAdjacentHTML(
-        "beforeend",
-        renderItemsMarkup(response.data.hits)
-      );
-      lightbox.refresh();
-      removeLoadMoreBtn();
-      iziToast.warning({
-        message: "We're sorry, but you've reached the end of search results.",
-        position: "topRight",});
-      return;
-    }
-
-    if (response.data.totalHits > 15) {
-      galleryEl.innerHTML = renderItemsMarkup(response.data.hits);
-      lightbox.refresh();
-      showLoadMoreBtn();
-      loadMoreImagesBtn.addEventListener("click", onLoadMoreBtnClick);
-      scroll();
-    }
-   
-  } catch (error) {
-    loaderEl.classList.remove("is-visible");
-    console.log(error);
-  }
-};
 
 const onLoadMoreBtnClick = async event => {
   try {
@@ -152,11 +89,8 @@ const onLoadMoreBtnClick = async event => {
       "beforeend",
       renderItemsMarkup(response.data.hits)
     );
-    new SimpleLightbox(".image-link", {
-      focus: true,
-      captionsData: "alt",
-      captionDelay: 250
-    });
+    let lightbox = getLightbox(".image-link");
+    lightbox.refresh();
    
     scroll();
 
@@ -183,11 +117,64 @@ const onLoadMoreBtnClick = async event => {
   }
 };
 
+
+const onSearchFormSubmit = async event => {
+  try {
+    event.preventDefault();
+    query = event.target.elements.picture_search.value.trim();  
+    if (query === "") {
+      refreshGallery(event.target, "Please enter a query.");
+      return;
+    }
+    currentPage = 1;
+    galleryEl.innerHTML = "";
+    loaderEl.classList.add("is-visible");
+    const response = await getImages(query, currentPage);
+    loaderEl.classList.remove("is-visible");
+    userInput.value = "";
+
+    if (response.data.hits.length === 0) {
+      refreshGallery(
+        event.target,
+       iziToast.error({
+          message: "Sorry, there are no images matching your search query. Please try again.",
+        })
+      );
+      return;
+    }
+    galleryEl.insertAdjacentHTML(
+        "beforeend",
+        renderItemsMarkup(response.data.hits)
+      );
+      let lightbox=getLightbox(".image-link");
+      lightbox.refresh();
+
+    if (response.data.totalHits <= 15) {
+      removeLoadMoreBtn();
+      return;
+    }
+
+    if (response.data.totalHits > 15) {
+      galleryEl.innerHTML = renderItemsMarkup(response.data.hits);
+      lightbox.refresh();
+      showLoadMoreBtn();
+      loadMoreImagesBtn.addEventListener("click", onLoadMoreBtnClick);
+      scroll();
+    }
+   
+  } catch (error) {
+    loaderEl.classList.remove("is-visible");
+    console.log(error);
+  }
+};
+
+
 searchForm.addEventListener("submit", onSearchFormSubmit);
-
-
-
-autocomplete({
-  container: '#autocomplete',
-  placeholder: 'Search for images',
+searchForm.addEventListener("reset", () => {
+  galleryEl.innerHTML = "";
+  removeLoadMoreBtn();
+  iziToast.info({
+    message: "Search reset. Please enter a new query.",
+    position: "topRight"
+  });
 });
