@@ -183,3 +183,18 @@ margin: 0 auto;
     letter-spacing: 0.64px;
     margin-top: 32px;
 }
+
+.scroll-to-top-btn {
+  position: fixed;
+  bottom: 40px;
+  right: 40px;
+  display: inline-block;
+  padding: 0.5em 1em;
+  z-index: 100;
+  cursor: pointer;
+  opacity: 0.8;
+}
+
+.scroll-to-top-btn.is-hidden {
+  display: none;
+}
