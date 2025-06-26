@@ -168,7 +168,7 @@ letter-spacing: 0.48px;
 .load-more-images-btn{
 display: block;  
 margin: 0 auto;
-    width: 91px;
+    width: 30%;
     height: 40px;
     background: #4E75FF;
     color: white;
@@ -184,8 +184,11 @@ margin: 0 auto;
     margin-top: 32px;
 }
 
-.scroll-to-top-btn {
+.scroll-to-top-btn{
   position: fixed;
+  background: #da11c6;
+  color: white;
+  border: transparent;
   bottom: 40px;
   right: 40px;
   display: inline-block;
